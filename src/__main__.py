@@ -2,6 +2,7 @@ import mandelbrot
 import numpy as np
 import time
 from PIL import Image
+from util import lerp
 
 width, height = 1920, 1080
 dimensions = (width, height)
@@ -27,15 +28,16 @@ end = time.time()
 # print("Elapsed = %s" % (end - start))
 
 start = time.time()
-i = mandelbrot.set_color(i, iterations)
+i = mandelbrot.draw_mandelbrot(i, iterations)
 end = time.time()
 # print("Elapsed (color) = %s" % (end - start))
 # print(i)
 
 img = Image.fromarray(i).transpose(Image.ROTATE_90)
-# img = drawpath(img, (-1.5, 0.1), 4, p)
-# img, pts = drawpath(img, (.365, .592), 4, p)
-img, pts = mandelbrot.drawpath(img, (-1.15, .20), 4, p, iterations)
+# pts = mandelbrot.mandelbrot_path(img.size, (-1.5, 0.1), 4, p, iterations)
+# pts = mandelbrot.mandelbrot_path(img.size, (.365, .592), 4, p, iterations)
+pts = mandelbrot.mandelbrot_path(img.size, (-1.15, .20), 4, p, iterations)
+img = mandelbrot.draw_path(img, pts)
 img.save('../output/mainmandelbrot.png')
 
 # frame = 0
